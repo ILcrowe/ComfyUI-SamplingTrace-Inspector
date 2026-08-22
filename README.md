@@ -4,11 +4,13 @@
 
 Inspect how a ComfyUI image forms over time: execution flow, sampling steps, latent state, predicted x0, sigma, CFG behavior, ControlNet residuals, model patches, and prompt-word attention in one panel.
 
-> Current status: **0.4.0b3 public preview**. The package has passed internal acceptance in a separate ComfyUI, user, input, output, and temporary environment. A clean installation outside the development machine and a first external user's Quick Start remain unverified. See `docs/LOCAL_VALIDATION.md` and `docs/BUILD_VALIDATION.md`.
+> Current status: **0.4.0b3 public preview**. The exact public tag passed a clean-clone Quick Start on the development machine in an isolated ComfyUI, user, input, output, and temporary environment, including one-node search, the Basic/Advanced popup, and a two-image batch selector. A clean installation on another machine and a first external user's Quick Start remain unverified. See `docs/LOCAL_VALIDATION.md` and `docs/BUILD_VALIDATION.md`.
 
 ---
 
-![Sampling Trace Inspector in action](docs/images/sampling-trace-inspector-preview.png)
+![Sampling Trace Inspector — batch item 1 of 2](docs/images/sampling-trace-inspector-preview-1-of-2-en.png)
+
+![Sampling Trace Inspector — batch item 2 of 2](docs/images/sampling-trace-inspector-preview-2-of-2-en.png)
 
 ## 1. Why this exists
 
@@ -37,18 +39,16 @@ This is a sampling debugger for locating turning points in the generation proces
 
 ## 2. How it fits into a workflow
 
-Sampling Trace Inspector does not replace KSampler. Insert `Sampling Trace Model` after the final MODEL patch and before the first sampler.
+Sampling Trace Inspector does not replace KSampler. Add `Sampling Trace · One Node Setup` after the final MODEL patch, and feed both the final MODEL and checkpoint CLIP through that one node.
 
 ```text
-Checkpoint
-   ↓
-LoRA
-   ↓
-IPAdapter / other MODEL patches
-   ↓
-Sampling Trace Model
-   ↓
-Existing KSampler or standard ComfyUI sampler path
+[Checkpoint Loader]
+  MODEL → LoRA → IPAdapter / other patches ─┐
+  CLIP ─────────────────────────────────────┤
+                                           ↓
+                         [Sampling Trace · One Node Setup]
+                           MODEL → Existing KSampler
+                           CLIP  → Positive / Negative Text Encode
 ```
 
 Keep ControlNet on the existing CONDITIONING path:
@@ -61,7 +61,7 @@ ControlNet Apply
 KSampler
 ```
 
-`Sampling Trace Model` registers observers on a cloned `ModelPatcher`:
+The node's MODEL output registers observers on a cloned `ModelPatcher`, while its CLIP output transparently forwards the original tokenizer result and records prompt metadata in the same Run:
 
 ```text
 OUTER_SAMPLE wrapper
@@ -135,6 +135,8 @@ Sampling Trace · One Node Setup
 
 5. Add `Sampling Trace · One Node Setup` after the final MODEL patch. It intentionally exposes only MODEL and CLIP sockets. Use its compact `Trace settings` button to open a popup and choose `Basic` (default) or `Advanced`, then connect MODEL to the first sampler and fan CLIP out to both Text Encode nodes.
 
+![One-node setup and capture popup](docs/images/one-node-quick-start-en.png)
+
 6. Open the `Sampling Trace Inspector` bottom panel.
 
 ---
@@ -156,6 +158,8 @@ Sampling Trace · One Node Setup
             └──→ Negative Text Encode
 ```
 
+![Where to place the one-node setup](docs/images/one-node-wiring-en.svg)
+
 This is the recommended setup: one physical trace node creates one Run for the final MODEL and the actual CLIP `tokenize()` calls. No `prompt_trace` wire is needed. Place the node after the last MODEL patch, then connect its CLIP output to both positive and negative Text Encode nodes.
 
 The node starts in `Basic` mode. Click `Trace settings · Basic` on the node to open the capture popup; selecting `Advanced` stores that choice with the workflow and applies it to the next queued run. The popup keeps capture depth out of the wiring surface while making the active level visible on the node.
@@ -164,7 +168,7 @@ Multi-image batches are captured automatically without adding another node. For 
 
 The CLIP proxy forwards the original `tokenize()` result unchanged and records the calling node, prompt text, CLIP-L/G token IDs, input weights, and readable word groups in the same run. Normal node search exposes only `Sampling Trace · One Node Setup`. The other nine classes remain registered but deprecated and hidden so saved workflows still load and internal or advanced diagnostics remain possible. Run completion automatically finalizes reports, and Notes are managed in the bottom panel, so separate Export and Note nodes are not part of the public workflow surface.
 
-### Why the trace node comes after the last MODEL patch
+### Why the one-node setup comes after the last MODEL patch
 
 - The snapshot includes LoRA, IPAdapter, and other patches already registered on the final MODEL.
 - Runtime patch keys are easier to associate with the actual sampling call.
@@ -240,7 +244,7 @@ Only the workflow filename is stored in `run.json` and reports; local absolute p
 
 Drag the divider between the center workspace and `Selected Run / Compare Runs` to resize the right panel. The width is saved in the current browser. Double-click the divider to restore its default width.
 
-If generation succeeds without `Sampling Trace Model` in the executed graph, the panel explains that the required path is `final MODEL → Sampling Trace Model → sampler`.
+If generation succeeds without `Sampling Trace · One Node Setup` in the executed graph, the panel explains the required MODEL path and reminds you to route checkpoint CLIP through the same node before the Text Encode nodes.
 
 ### Denoise step viewer
 

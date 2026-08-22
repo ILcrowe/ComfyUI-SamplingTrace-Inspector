@@ -4,11 +4,13 @@
 
 ComfyUI의 Preview (중간 미리보기)를 출발점으로, 생성 과정의 **노드 실행 흐름**, **Sampling Step (샘플링 단계)**, **Latent (잠재 표현 / 압축된 이미지 정보)**, **x0 (현재 예상 완성 Latent)**, **Sigma (현재 노이즈 강도)**, **CFG (조건 반영 강도)**, **ControlNet residual (제어 잔차)**을 한 타임라인에서 관찰하는 커스텀 노드 패키지입니다.
 
-> 현재 상태: **0.4.0b3 공개 미리보기(public preview)**. 배포본을 별도 ComfyUI·사용자·출력 환경에서 내부 수용 테스트했습니다. 이 작업 머신 밖의 새 설치(clean install)와 외부 첫 사용자의 빠른 시작(Quick Start) 완주는 아직 별도 검증 항목입니다. 상세 근거는 `docs/LOCAL_VALIDATION.md`와 `docs/BUILD_VALIDATION.md`를 봅니다.
+> 현재 상태: **0.4.0b3 공개 미리보기(public preview)**. 공개 태그와 정확히 같은 복제본을 이 작업 머신의 격리된 ComfyUI·사용자·입력·출력·임시 환경에서 빠른 시작(Quick Start) 검증했습니다. 원노드 검색, 기본/고급 팝업, 2장 배치 선택기까지 통과했습니다. 다른 머신의 새 설치와 외부 첫 사용자의 빠른 시작 완주는 아직 별도 검증 항목입니다. 상세 근거는 `docs/LOCAL_VALIDATION.md`와 `docs/BUILD_VALIDATION.md`를 봅니다.
 
 ---
 
-![Sampling Trace Inspector 실행 화면](docs/images/sampling-trace-inspector-preview.png)
+![Sampling Trace Inspector — 배치 1/2](docs/images/sampling-trace-inspector-preview-1-of-2.png)
+
+![Sampling Trace Inspector — 배치 2/2](docs/images/sampling-trace-inspector-preview.png)
 
 ## 1. 핵심 목적
 
@@ -37,18 +39,16 @@ Step Preview 관찰
 
 ## 2. 구조
 
-기존 KSampler를 대체하지 않습니다. 최종 MODEL 선에 `Sampling Trace Model` 노드를 하나 삽입합니다.
+기존 KSampler를 대체하지 않습니다. 최종 MODEL 패치 뒤에 `Sampling Trace · One Node Setup`을 추가하고, 최종 MODEL과 체크포인트 CLIP을 그 노드 하나로 통과시킵니다.
 
 ```text
-Checkpoint
-   ↓
-LoRA
-   ↓
-IPAdapter / 기타 MODEL Patch
-   ↓
-Sampling Trace Model
-   ↓
-기존 KSampler 또는 표준 ComfyUI sampler 경로
+[Checkpoint Loader]
+  MODEL → LoRA → IPAdapter / 기타 패치 ─┐
+  CLIP ──────────────────────────────────┤
+                                        ↓
+                      [Sampling Trace · One Node Setup]
+                        MODEL → 기존 KSampler
+                        CLIP  → 긍정 / 부정 Text Encode
 ```
 
 ControlNet은 기존 CONDITIONING 선을 그대로 유지합니다.
@@ -61,7 +61,7 @@ ControlNet Apply
 KSampler
 ```
 
-`Sampling Trace Model`은 복제된 ModelPatcher (모델 변경사항 관리자)에 다음 관찰 지점을 등록합니다.
+이 노드의 MODEL 출력은 복제된 모델 변경사항 관리자(ModelPatcher)에 관찰 지점을 등록하고, CLIP 출력은 원래 토큰화 결과를 그대로 통과시키면서 프롬프트 메타데이터를 같은 실행(Run)에 기록합니다.
 
 ```text
 OUTER_SAMPLE wrapper
@@ -135,6 +135,8 @@ Sampling Trace · One Node Setup
 
 5. 최종 MODEL patch 뒤에 `Sampling Trace · One Node Setup`을 추가합니다. 이 노드는 MODEL과 CLIP 소켓만 표시합니다. 노드의 작은 `추적 설정` 버튼을 눌러 팝업에서 `Basic`(기본값) 또는 `Advanced`를 선택한 뒤, MODEL 출력은 첫 샘플러로, CLIP 출력은 긍정·부정 Text Encode 양쪽으로 연결합니다.
 
+![원노드 설정과 수집 팝업](docs/images/one-node-quick-start.png)
+
 6. ComfyUI 하단의 `Sampling Trace Inspector` 패널을 엽니다.
 
 ---
@@ -156,6 +158,8 @@ Sampling Trace · One Node Setup
             └──→ Negative Text Encode
 ```
 
+![원노드 설정 연결 위치](docs/images/one-node-wiring-ko.svg)
+
 이 구성이 권장 경로입니다. 물리적인 추적 노드 하나가 최종 MODEL과 실제 CLIP `tokenize()` 호출을 같은 Run에 기록하므로 별도 `prompt_trace` 선이 필요 없습니다. 마지막 MODEL patch 뒤에 놓고 CLIP 출력 하나를 긍정·부정 Text Encode 양쪽으로 분기하면 됩니다.
 
 새 노드는 `Basic`으로 시작합니다. 노드의 `추적 설정 · 기본` 버튼을 누르면 수집 팝업이 열리고, 여기서 `Advanced`를 선택하면 선택값이 워크플로에 저장되어 다음 큐 실행부터 적용됩니다. 배선 화면에는 현재 수집 수준만 짧게 표시하고 상세 설명은 팝업으로 분리했습니다.
@@ -164,7 +168,7 @@ Sampling Trace · One Node Setup
 
 원본 CLIP을 수정하지 않는 프록시(proxy)가 실제 `tokenize()` 반환값을 그대로 통과시킨 뒤 호출 노드·원문·CLIP-L/G token ID·입력 가중치·단어 묶음을 같은 Run에 기록합니다. 일반 노드 검색에는 `Sampling Trace · One Node Setup` 하나만 노출합니다. 나머지 9개 클래스는 저장된 워크플로 호환과 내부·고급 진단 능력을 위해 등록은 유지하되 사용 중단 예정(Deprecated)으로 숨깁니다. 보고서는 실행 완료 시 자동 마무리되고 메모는 하단 패널에서 관리하므로 별도 내보내기·메모 노드는 공개 워크플로 표면에 두지 않습니다.
 
-### `Sampling Trace Model`을 마지막 MODEL patch 뒤에 두는 이유
+### 원노드 설정을 마지막 MODEL patch 뒤에 두는 이유
 
 - LoRA / IPAdapter / 기타 패치가 등록된 최종 MODEL 상태를 snapshot할 수 있습니다.
 - 실제 sampling 중 어떤 patch key가 활성화되는지 연결하기 쉽습니다.
@@ -236,7 +240,7 @@ Trace Preview decoder
 
 가운데 작업 영역과 우측 `Selected Run / Compare Runs` 사이 경계선을 드래그하면 우측 폭을 조절할 수 있습니다. 폭은 현재 브라우저에 저장되며, 경계선을 더블클릭하면 기본 폭으로 돌아갑니다.
 
-일반 생성은 성공했지만 `Sampling Trace Model`이 실행 그래프에 없어서 새 Run이 생기지 않은 경우, 패널 상단에 `최종 MODEL → Sampling Trace Model → 샘플러` 연결 안내가 표시됩니다.
+일반 생성은 성공했지만 `Sampling Trace · One Node Setup`이 실행 그래프에 없어 새 실행(Run)이 생기지 않은 경우, 패널 상단에서 필요한 MODEL 경로와 체크포인트 CLIP을 같은 노드에 넣은 뒤 Text Encode로 보내라는 안내를 표시합니다.
 
 ### Step Viewer
 - Step 슬라이더

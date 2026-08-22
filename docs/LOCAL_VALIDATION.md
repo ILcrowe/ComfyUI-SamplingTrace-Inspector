@@ -2,7 +2,7 @@
 
 ## Status
 
-`FEATURE-PATH PASS / PACKAGED INTERNAL ACCEPTANCE PASS` — 기존 실제 설치본에서 Plugin import, Bottom panel, 최소 KSampler, Trace On/Off 무간섭, Depth·OpenPose ControlNet, P1 Adapter 3종, A/B Compare·Report·동시 prompt 연결, 성능 예산을 확인했습니다. 비공개 저장소 fresh clone도 격리 ComfyUI에서 설치·실제 생성·UI/API·재시작 수용 테스트를 통과했습니다. 외부 clean install과 첫 사용자 검증은 별도입니다.
+`FEATURE-PATH PASS / PACKAGED INTERNAL ACCEPTANCE PASS / PUBLIC-TAG QUICK START PASS` — 기존 실제 설치본에서 Plugin import, Bottom panel, 최소 KSampler, Trace On/Off 무간섭, Depth·OpenPose ControlNet, P1 Adapter 3종, A/B Compare·Report·동시 prompt 연결, 성능 예산을 확인했습니다. 공개 태그 `v0.4.0b3`의 clean clone도 같은 작업 머신의 격리 ComfyUI에서 설치·실제 생성·원노드 팝업·배치 선택기 검증을 통과했습니다. 다른 머신의 clean install과 외부 첫 사용자 검증은 별도입니다.
 
 ## Environment
 
@@ -30,6 +30,16 @@
 - Adapter assessment: `required 4 / recommended 7 / manual_review 2 / not_needed 23`
 - Dynamic mapping / scan errors / parse errors: `7 / 0 / 0`
 - `LOCAL_ADAPTER_PLAN.md`: generated; actual-use column remains `TODO`
+
+## Public-tag clean-clone Quick Start — 2026-08-23 PASS
+
+- Source: public tag `v0.4.0b3`, commit `72ca61fa7b2ae9991ffd8a385729a888ee97c243`
+- Isolation: separate base/user/input/output/temp/database, port `8892`, only `ComfyUI-SamplingTrace-Inspector` allowlisted
+- Discovery: normal node search exposed only `Sampling Trace · One Node Setup`
+- Setup UI: the compact settings button opened the Basic/Advanced popup and explained automatic batch capture
+- Actual generation: prompt `a02ca458-ced0-4e30-804f-ec33dbc6f9f0`, Run `67855650-07a1-468a-bdab-3fa5f6620392`, 512×512, 4 steps, batch size 2, errors 0
+- Batch result: both images retained independent previews and statistics; the bottom panel switched between `1/2` and `2/2`
+- Scope: same-machine public-tag Quick Start evidence; this does not replace another-machine installation or an external first-user pass
 
 ## Static checks
 

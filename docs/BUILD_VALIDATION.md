@@ -10,8 +10,11 @@
 - 단일 노드의 Basic/Advanced 팝업 설정이 워크플로에 직렬화되고 다음 실행에 적용되는 경로 확인
 - 한 Run·sampler segment 안에서 여러 이미지 배치의 x/x0 요약·단계별 Preview·Preview change를 항목별로 독립 저장
 - 이전 형식의 다중 배치 Run은 latent shape로 배치 수를 복원하고 미수집 항목을 비활성 상태로 설명하는 호환 UI 확인
-- ComfyUI embedded Python 전체 pytest `76`개, Python/JavaScript 정적 검사, JavaScript 문법 검사, 공개 파일 SHA-256 `89/89`, `git diff --check` 통과
-- 외부 Chrome에서 단일 노드 팝업과 기존 4-batch Run의 `1/4` 호환 UI를 확인하고, 이후 사용자가 실제 다중 배치의 `1/N` 개별 추적 동작을 최종 확인
+- 공개 태그 `v0.4.0b3`·commit `72ca61fa7b2ae9991ffd8a385729a888ee97c243`의 clean clone을 별도 base/user/input/output/temp/database·port `8892`에서 Sampling Trace Inspector만 허용해 기동
+- 실제 생성 prompt `a02ca458-ced0-4e30-804f-ec33dbc6f9f0`, Run `67855650-07a1-468a-bdab-3fa5f6620392`: 512×512, 4 steps, batch 2, errors 0, 두 항목의 Preview·통계와 `1/2`·`2/2` 전환 확인
+- 외부 Chrome에서 공개 노드 하나만 검색되는 상태, 단일 노드 Basic/Advanced 팝업, 실제 2-batch 선택기와 서로 다른 항목별 수치를 확인
+- 영문·한글 ComfyUI 화면을 분리해 각 README에 배치 `1/2`·`2/2`, 원노드 설정 팝업, MODEL·CLIP 연결 위치 이미지까지 4장씩 배치
+- ComfyUI embedded Python 전체 pytest `76`개, Python/JavaScript 정적 검사, JavaScript 문법 검사, 공개 파일 SHA-256 `96/96`, `git diff --check` 통과
 
 ### 2026-08-19 공개 전환 검증
 
