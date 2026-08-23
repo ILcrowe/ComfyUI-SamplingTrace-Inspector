@@ -1,6 +1,6 @@
 [project]
 name = "comfyui-samplingtrace-inspector"
-version = "0.4.0b4"
+version = "0.4.0-beta.4"
 description = "Preview-driven execution and sampling trace inspector for ComfyUI"
 readme = "README.md"
 requires-python = ">=3.10"

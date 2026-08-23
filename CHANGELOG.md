@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-## 0.4.0b4 — Registry-ready one-node release — 2026-08-23
+## 0.4.0-beta.4 — Registry-ready one-node release — 2026-08-23
 
 - Added separate English and Korean Quick Start, `1/2` and `2/2` batch screenshots, and one-node MODEL/CLIP wiring diagrams.
 - Marked the nine legacy compatibility nodes as deprecated and hidden in normal search while preserving their class mappings and saved-workflow compatibility.
