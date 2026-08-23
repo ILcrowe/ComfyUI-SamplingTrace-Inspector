@@ -2,7 +2,17 @@
 
 ## 판정
 
-현재 패키지는 **0.4.0b3 공개 미리보기(public preview)**입니다. 독립 정적 검사와 기존 로컬 ComfyUI의 주요 기능 경로에 더해, 저장소 복제본을 별도 ComfyUI root·사용자·출력·포트에서 내부 수용 테스트했습니다. 이 결과는 현재 머신의 공개 미리보기 근거이며, 외부 새 설치(clean install)나 공개 베타 완료·1.0을 뜻하지 않습니다.
+현재 패키지는 **0.4.0b4 공개 미리보기 후보(public preview candidate)**입니다. 독립 정적 검사와 기존 로컬 ComfyUI의 주요 기능 경로에 더해, 이전 공개 태그 `v0.4.0b3`의 저장소 복제본을 별도 ComfyUI root·사용자·출력·포트에서 내부 수용 테스트했습니다. 이 결과는 현재 머신의 공개 미리보기 근거이며, `v0.4.0b4`의 별도 clean clone이나 외부 새 설치(clean install), 공개 베타 완료·1.0을 뜻하지 않습니다.
+
+### 2026-08-23 Comfy Registry 후보 준비
+
+- package/version: `comfyui-samplingtrace-inspector` / `0.4.0b4`
+- Registry publisher: `@ilcrowe`; `pyproject.toml`의 `PublisherId = "ilcrowe"`로 일치
+- 공개 표면: 권장 원노드 1개, 기존 호환 노드 9개는 등록을 유지한 채 사용 중단 예정(Deprecated)으로 숨김
+- 문서: 영문·한글 빠른 시작, 배치 `1/2`·`2/2`, MODEL·CLIP 연결 위치 이미지를 각 README에 배치
+- 후보 검사: ComfyUI embedded Python `pytest 76 passed`, 정적 검사, Python compile, JavaScript syntax, `git diff --check` 통과
+- Registry 검사: Comfy CLI `1.17.0`의 `comfy node validate` 보안·메타데이터 검사 통과
+- 검증 경계: 아래 `v0.4.0b3` clean-clone 증거는 역사적 기준선으로 보존하며, `0.4.0b4` 후보 검사는 이 절에 별도로 기록
 
 ### 2026-08-23 단일 노드·배치 추적 검증
 

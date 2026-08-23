@@ -4,7 +4,7 @@
 
 ComfyUI의 Preview (중간 미리보기)를 출발점으로, 생성 과정의 **노드 실행 흐름**, **Sampling Step (샘플링 단계)**, **Latent (잠재 표현 / 압축된 이미지 정보)**, **x0 (현재 예상 완성 Latent)**, **Sigma (현재 노이즈 강도)**, **CFG (조건 반영 강도)**, **ControlNet residual (제어 잔차)**을 한 타임라인에서 관찰하는 커스텀 노드 패키지입니다.
 
-> 현재 상태: **0.4.0b3 공개 미리보기(public preview)**. 공개 태그와 정확히 같은 복제본을 이 작업 머신의 격리된 ComfyUI·사용자·입력·출력·임시 환경에서 빠른 시작(Quick Start) 검증했습니다. 원노드 검색, 기본/고급 팝업, 2장 배치 선택기까지 통과했습니다. 다른 머신의 새 설치와 외부 첫 사용자의 빠른 시작 완주는 아직 별도 검증 항목입니다. 상세 근거는 `docs/LOCAL_VALIDATION.md`와 `docs/BUILD_VALIDATION.md`를 봅니다.
+> 현재 상태: **0.4.0b4 공개 미리보기 후보(public preview candidate)**. 이전 공개 태그 `v0.4.0b3`는 이 작업 머신의 격리된 ComfyUI·사용자·입력·출력·임시 환경에서 원노드 검색, 기본/고급 팝업, 2장 배치 선택기까지 빠른 시작(Quick Start) 검증을 통과했습니다. 이번 후보는 영·한 시각 가이드, 기존 호환 노드 9개의 사용 중단 예정(Deprecated) 처리, Comfy Registry 메타데이터를 추가합니다. 다른 머신의 새 설치와 외부 첫 사용자의 빠른 시작 완주는 아직 별도 검증 항목입니다. 상세 근거는 `docs/LOCAL_VALIDATION.md`와 `docs/BUILD_VALIDATION.md`를 봅니다.
 
 ---
 

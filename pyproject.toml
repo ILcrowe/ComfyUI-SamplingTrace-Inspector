@@ -1,6 +1,6 @@
 [project]
 name = "comfyui-samplingtrace-inspector"
-version = "0.4.0b3"
+version = "0.4.0b4"
 description = "Preview-driven execution and sampling trace inspector for ComfyUI"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -17,7 +17,7 @@ Repository = "https://github.com/ILcrowe/ComfyUI-SamplingTrace-Inspector"
 Issues = "https://github.com/ILcrowe/ComfyUI-SamplingTrace-Inspector/issues"
 
 [tool.comfy]
-PublisherId = "local-rnd"
+PublisherId = "ilcrowe"
 DisplayName = "ComfyUI Sampling Trace Inspector"
 Icon = ""
 

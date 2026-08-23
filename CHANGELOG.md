@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+## 0.4.0b4 — Registry-ready one-node release — 2026-08-23
+
+- Added separate English and Korean Quick Start, `1/2` and `2/2` batch screenshots, and one-node MODEL/CLIP wiring diagrams.
+- Marked the nine legacy compatibility nodes as deprecated and hidden in normal search while preserving their class mappings and saved-workflow compatibility.
+- Updated repository, author, sponsorship, and copyright references to `ILcrowe`, and set the Comfy Registry publisher to `@ilcrowe`.
+- Retained `local-rnd.ComfyUI.TraceInspector` as the internal frontend extension identifier so existing ComfyUI UI state remains compatible; it is not the Registry publisher identity.
+
 ## 0.4.0b3 — One-node batch trace — 2026-08-23
 
 - Added the zero-configuration `Sampling Trace · One Node Setup`, which exposes only final MODEL and Checkpoint CLIP sockets while applying recommended advanced trace settings internally. It records MODEL sampling and actual positive/negative CLIP tokenization in one Run without a separate `prompt_trace` wire. Existing split MODEL/CLIP nodes remain workflow-compatible.
