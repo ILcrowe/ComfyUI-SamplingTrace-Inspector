@@ -442,12 +442,12 @@ Do not attach model files, private workflow originals, generated images, prompt 
 
 ## 16. Sponsorship
 
-The complete source and features remain available under the license below. If this tool helps your work, you can optionally support its public development, documentation, testing, and maintenance through [GitHub Sponsors](https://github.com/sponsors/lLcrowe).
+The complete source and features remain available under the license below. If this tool helps your work, you can optionally support its public development, documentation, testing, and maintenance through [GitHub Sponsors](https://github.com/sponsors/ILcrowe).
 
 ---
 
 ## License
 
-Copyright (C) 2026 lLcrowe.
+Copyright (C) 2026 ILcrowe.
 
 Released under the [GNU General Public License v3.0 only](LICENSE) (`GPL-3.0-only`). See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for host and development-time components that are not bundled with this repository.

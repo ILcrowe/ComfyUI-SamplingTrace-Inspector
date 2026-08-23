@@ -1,6 +1,6 @@
 import { app } from "../../scripts/app.js";
 
-const EXTENSION_NAME = "llcrowe.SamplingTraceInspector.OneNodeSettings";
+const EXTENSION_NAME = "ilcrowe.SamplingTraceInspector.OneNodeSettings";
 const NODE_CLASS = "ComfyTraceOneNode";
 const PRESET_WIDGET = "trace_preset";
 const SETTINGS_BUTTON = "trace_settings_button";

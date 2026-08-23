@@ -512,13 +512,13 @@ NODE_CLASS_MAPPINGS = {
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "ComfyTraceOneNode": "Sampling Trace · One Node Setup",
-    "ComfyTraceClip": "Sampling Trace CLIP · Connect Both Prompts",
-    "ComfyTraceModel": "Sampling Trace Model",
-    "ComfyTraceExport": "Sampling Trace Export / Finalize",
-    "ComfyTraceNote": "Sampling Trace Note",
-    "ComfyTraceImage": "Sampling Trace Image",
-    "ComfyTraceLatent": "Sampling Trace Latent",
-    "ComfyTraceMask": "Sampling Trace Mask",
-    "ComfyTraceConditioning": "Sampling Trace Conditioning",
-    "ComfyTraceModelSnapshot": "Sampling Trace Model Snapshot",
+    "ComfyTraceClip": "Deprecated · Sampling Trace CLIP · Connect Both Prompts",
+    "ComfyTraceModel": "Deprecated · Sampling Trace Model",
+    "ComfyTraceExport": "Deprecated · Sampling Trace Export / Finalize",
+    "ComfyTraceNote": "Deprecated · Sampling Trace Note",
+    "ComfyTraceImage": "Deprecated · Sampling Trace Image",
+    "ComfyTraceLatent": "Deprecated · Sampling Trace Latent",
+    "ComfyTraceMask": "Deprecated · Sampling Trace Mask",
+    "ComfyTraceConditioning": "Deprecated · Sampling Trace Conditioning",
+    "ComfyTraceModelSnapshot": "Deprecated · Sampling Trace Model Snapshot",
 }

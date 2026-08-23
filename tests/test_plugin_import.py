@@ -210,6 +210,12 @@ def test_custom_node_package_imports_with_comfy_server_stubs(monkeypatch, tmp_pa
             if not getattr(node_class, "DEPRECATED", False)
         ]
         assert visible_nodes == ["ComfyTraceOneNode"]
+        assert module.NODE_DISPLAY_NAME_MAPPINGS["ComfyTraceOneNode"] == "Sampling Trace · One Node Setup"
+        assert all(
+            display_name.startswith("Deprecated · ")
+            for name, display_name in module.NODE_DISPLAY_NAME_MAPPINGS.items()
+            if name != "ComfyTraceOneNode"
+        )
         assert module.NODE_CLASS_MAPPINGS["ComfyTraceOneNode"].RETURN_TYPES == (
             "MODEL",
             "CLIP",
@@ -290,7 +296,7 @@ def test_custom_node_package_imports_with_comfy_server_stubs(monkeypatch, tmp_pa
             for node_class in module.NODE_CLASS_MAPPINGS.values()
         )
         assert all(
-            display_name.startswith("Sampling Trace ")
+            display_name.startswith(("Sampling Trace ", "Deprecated · Sampling Trace "))
             for display_name in module.NODE_DISPLAY_NAME_MAPPINGS.values()
         )
         assert module.WEB_DIRECTORY == "./web"

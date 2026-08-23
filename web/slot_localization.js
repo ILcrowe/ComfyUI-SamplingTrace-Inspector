@@ -1,6 +1,6 @@
 import { app } from "../../scripts/app.js";
 
-const EXTENSION_NAME = "llcrowe.SamplingTraceInspector.SlotLocalization";
+const EXTENSION_NAME = "ilcrowe.SamplingTraceInspector.SlotLocalization";
 
 function currentLanguage() {
   const language = app?.ui?.settings?.getSettingValue?.("Comfy.Locale")

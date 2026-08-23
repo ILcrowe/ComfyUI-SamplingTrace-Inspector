@@ -428,12 +428,12 @@ python scripts/comfy_integration_smoke.py
 
 ## 16. 후원
 
-전체 소스와 기능은 아래 라이선스에 따라 공개됩니다. 이 도구가 제작에 도움이 되었다면 [GitHub Sponsors](https://github.com/sponsors/lLcrowe)에서 공개 개발·문서화·테스트·유지보수를 선택적으로 후원할 수 있습니다.
+전체 소스와 기능은 아래 라이선스에 따라 공개됩니다. 이 도구가 제작에 도움이 되었다면 [GitHub Sponsors](https://github.com/sponsors/ILcrowe)에서 공개 개발·문서화·테스트·유지보수를 선택적으로 후원할 수 있습니다.
 
 ---
 
 ## 라이선스
 
-Copyright (C) 2026 lLcrowe.
+Copyright (C) 2026 ILcrowe.
 
 [GNU 일반 공중 사용 허가서 버전 3.0 전용(GNU General Public License v3.0 only)](LICENSE), 즉 `GPL-3.0-only`로 배포합니다. 저장소에 포함되지 않는 호스트·개발 도구 구성요소는 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)를 봅니다.
