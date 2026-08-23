@@ -109,7 +109,7 @@ These files help determine whether installed ControlNet, IPAdapter, LoRA, Detail
 1. Clone the public repository into `custom_nodes`. If you download a ZIP, extract it with the same final folder name.
 
 ```bash
-git clone https://github.com/lLcrowe/ComfyUI-SamplingTrace-Inspector.git ComfyUI/custom_nodes/ComfyUI-SamplingTrace-Inspector
+git clone https://github.com/ILcrowe/ComfyUI-SamplingTrace-Inspector.git ComfyUI/custom_nodes/ComfyUI-SamplingTrace-Inspector
 ```
 
 Final location:
@@ -434,7 +434,7 @@ Follow `docs/TEST_PLAN.md` for real generation validation.
 
 ## 15. Public preview feedback
 
-Use [GitHub Issues](https://github.com/lLcrowe/ComfyUI-SamplingTrace-Inspector/issues) for reproducible defects, compatibility problems, and unclear setup steps.
+Use [GitHub Issues](https://github.com/ILcrowe/ComfyUI-SamplingTrace-Inspector/issues) for reproducible defects, compatibility problems, and unclear setup steps.
 
 Do not attach model files, private workflow originals, generated images, prompt text, or complete run folders. Share only the minimum reproducible configuration.
 

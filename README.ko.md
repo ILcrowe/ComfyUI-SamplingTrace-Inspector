@@ -109,7 +109,7 @@ docs/LOCAL_ADAPTER_PLAN.md
 1. 공개 저장소를 다음 `custom_nodes` 위치에 복제합니다. ZIP을 내려받은 경우에도 같은 폴더명이 되도록 압축을 풉니다.
 
 ```bash
-git clone https://github.com/lLcrowe/ComfyUI-SamplingTrace-Inspector.git ComfyUI/custom_nodes/ComfyUI-SamplingTrace-Inspector
+git clone https://github.com/ILcrowe/ComfyUI-SamplingTrace-Inspector.git ComfyUI/custom_nodes/ComfyUI-SamplingTrace-Inspector
 ```
 
 최종 설치 위치:
@@ -422,7 +422,7 @@ python scripts/comfy_integration_smoke.py
 
 ## 15. 공개 미리보기 피드백
 
-재현 가능한 오류·호환성 문제·사용 중 막힌 지점은 [GitHub Issues](https://github.com/lLcrowe/ComfyUI-SamplingTrace-Inspector/issues)에 남깁니다. 모델 파일, 개인 workflow 원본, 생성 이미지처럼 공개하면 안 되는 자료는 Issue에 첨부하지 말고 재현 가능한 최소 조건만 기록합니다.
+재현 가능한 오류·호환성 문제·사용 중 막힌 지점은 [GitHub Issues](https://github.com/ILcrowe/ComfyUI-SamplingTrace-Inspector/issues)에 남깁니다. 모델 파일, 개인 workflow 원본, 생성 이미지처럼 공개하면 안 되는 자료는 Issue에 첨부하지 말고 재현 가능한 최소 조건만 기록합니다.
 
 ---
 
