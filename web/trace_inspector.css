@@ -211,7 +211,9 @@
 .cti-prompt-section { background: var(--cti-bg); }
 .cti-section-title { margin: 0; font-size: 12px; font-weight: 650; }
 .cti-section-header { display: flex; align-items: center; gap: 7px; margin-bottom: 8px; }
-.cti-section-header > .cti-heading-group:first-child { margin-right: auto; }
+.cti-section-header > .cti-heading-group:first-child { flex: 1 1 auto; margin-right: auto; overflow: hidden; }
+.cti-section-header > .cti-badge, .cti-section-header > .cti-button { flex: 0 0 auto; white-space: nowrap; }
+.cti-section-header .cti-section-title, .cti-section-header .cti-section-kicker { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .cti-heading-group { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
 .cti-zone-label { margin-bottom: 6px; color: var(--cti-muted); font-size: 9px; font-weight: 650; text-transform: uppercase; letter-spacing: 0.08em; }
 

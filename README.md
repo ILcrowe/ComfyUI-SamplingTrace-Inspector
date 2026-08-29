@@ -4,7 +4,7 @@
 
 Inspect how a ComfyUI image forms over time: execution flow, sampling steps, latent state, predicted x0, sigma, CFG behavior, ControlNet residuals, model patches, and prompt-word attention in one panel.
 
-> Current status: **0.4.0-beta.4 public preview candidate**. The previous `v0.4.0b3` public tag passed a clean-clone Quick Start on the development machine in an isolated ComfyUI, user, input, output, and temporary environment, including one-node search, the Basic/Advanced popup, and a two-image batch selector. This candidate adds localized visual guidance, hides nine legacy compatibility nodes as deprecated, and prepares Comfy Registry metadata. A clean installation on another machine and a first external user's Quick Start remain unverified. See `docs/LOCAL_VALIDATION.md` and `docs/BUILD_VALIDATION.md`.
+> Current status: **0.4.0-beta.5 public preview**. This bug-fix release adds keyboard step navigation and corrects run-list scrolling and long-title action layout. The previous isolated Quick Start and Registry-ready one-node behavior remain the current release baseline. A clean installation on another machine and a first external user's Quick Start remain unverified. See `docs/LOCAL_VALIDATION.md` and `docs/BUILD_VALIDATION.md`.
 
 ---
 

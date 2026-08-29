@@ -392,6 +392,34 @@ function previewStepIndexes(steps) {
     .map(({ index }) => index);
 }
 
+function isTextEntryTarget(target) {
+  if (!(target instanceof Element)) return false;
+  if (target.closest("input, textarea, select")) return true;
+  const editable = target.closest("[contenteditable]");
+  return Boolean(editable && editable.getAttribute("contenteditable") !== "false");
+}
+
+function renderAndFocusCenter() {
+  render();
+  state.root?.querySelector(".cti-center")?.focus({ preventScroll: true });
+}
+
+function moveSelectedPreview(delta) {
+  const steps = state.selectedRun?.steps || [];
+  const previewIndexes = previewStepIndexes(steps);
+  if (!previewIndexes.length) return false;
+
+  let position = previewIndexes.indexOf(state.selectedStepIndex);
+  if (position < 0) {
+    const nearest = nearestPreviewStepIndex(previewIndexes, state.selectedStepIndex);
+    position = Math.max(0, previewIndexes.indexOf(nearest));
+  }
+  const nextPosition = Math.max(0, Math.min(previewIndexes.length - 1, position + delta));
+  state.selectedStepIndex = previewIndexes[nextPosition];
+  renderAndFocusCenter();
+  return true;
+}
+
 function batchItemsForStep(step) {
   if (Array.isArray(step?.batchItems) && step.batchItems.length) return step.batchItems;
   if (!step) return [];
@@ -826,6 +854,7 @@ function createToolbar() {
 }
 
 function renderRunList(container) {
+  const previousScrollTop = container.querySelector(".cti-run-list")?.scrollTop || 0;
   container.replaceChildren();
   container.append(el("h3", "cti-section-title", `${localeText("실행 기록", "Runs")} (${state.runs.length})`));
   const list = el("div", "cti-run-list");
@@ -844,6 +873,7 @@ function renderRunList(container) {
     list.append(row);
   }
   container.append(list);
+  list.scrollTop = previousScrollTop;
 }
 
 function metricCard(label, value, hint = "") {
@@ -1286,7 +1316,7 @@ function renderStepViewer(container, run) {
     frameButton.title = localeText(`배치 ${state.selectedBatchIndex + 1} · 스텝 ${frame.step + 1} · Sigma ${formatNumber(frame.sigma, 3)} · 변화 ${formatNumber(selectedFrame.previewChange, 4)}`, `Batch ${state.selectedBatchIndex + 1} · step ${frame.step + 1} · sigma ${formatNumber(frame.sigma, 3)} · change ${formatNumber(selectedFrame.previewChange, 4)}`);
     frameButton.addEventListener("click", () => {
       state.selectedStepIndex = index;
-      render();
+      renderAndFocusCenter();
     });
     const thumb = document.createElement("img");
     thumb.src = imageUrl(selectedFrame.previewUrl);
@@ -1313,12 +1343,12 @@ function renderStepViewer(container, run) {
   scrubber.append(
     button(localeText("이전", "Previous"), () => {
       state.selectedStepIndex = previewIndexes[Math.max(0, previewPosition - 1)];
-      render();
+      renderAndFocusCenter();
     }, "secondary"),
     range,
     button(localeText("다음", "Next"), () => {
       state.selectedStepIndex = previewIndexes[Math.min(previewIndexes.length - 1, previewPosition + 1)];
-      render();
+      renderAndFocusCenter();
     }, "secondary"),
   );
   container.append(scrubber);
@@ -2130,6 +2160,16 @@ function createPanel(container) {
   runList.dataset.role = "runs";
 
   const center = el("main", "cti-center");
+  center.tabIndex = 0;
+  center.setAttribute("aria-label", localeText(
+    "샘플링 미리보기 작업 영역. 좌우 방향키로 이전·다음 스텝을 이동합니다.",
+    "Sampling preview workspace. Use the left and right arrow keys to move between steps.",
+  ));
+  center.addEventListener("pointerdown", (event) => {
+    if (!(event.target instanceof Element)) return;
+    if (event.target.closest("button, input, textarea, select, a, summary, [contenteditable]")) return;
+    center.focus({ preventScroll: true });
+  });
   const viewer = el("section", "cti-section cti-viewer-section");
   viewer.dataset.role = "viewer";
   const promptTokens = el("section", "cti-section cti-prompt-section");
@@ -2154,7 +2194,15 @@ function createPanel(container) {
   state.resizeHandler = () => applyRightPanelWidth(state.rightPanelWidth);
   window.addEventListener("resize", state.resizeHandler);
   state.keydownHandler = (event) => {
-    if (event.key === "Escape" && state.expanded) setExpanded(false);
+    if (event.key === "Escape" && state.expanded) {
+      setExpanded(false);
+      return;
+    }
+    if (!state.root || isTextEntryTarget(event.target)) return;
+    const center = state.root.querySelector(".cti-center");
+    if (!center?.contains(event.target)) return;
+    const delta = event.key === "ArrowLeft" ? -1 : event.key === "ArrowRight" ? 1 : 0;
+    if (delta && moveSelectedPreview(delta)) event.preventDefault();
   };
   document.addEventListener("keydown", state.keydownHandler);
   setExpanded(readExpandedPreference(), false);
