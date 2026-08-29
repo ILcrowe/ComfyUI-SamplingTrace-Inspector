@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## 0.4.0-beta.5 — Trace panel navigation and layout fixes — 2026-08-29
+
+- Added left/right arrow-key navigation between captured denoise previews while the center workspace has focus.
+- Preserved the run-list scroll position when selecting another trace Run.
+- Kept status and Delete actions readable when a selected Run has a long workflow title by truncating only the title area.
+
 ## 0.4.0-beta.4 — Registry-ready one-node release — 2026-08-23
 
 - Added separate English and Korean Quick Start, `1/2` and `2/2` batch screenshots, and one-node MODEL/CLIP wiring diagrams.

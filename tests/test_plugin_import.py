@@ -133,6 +133,24 @@ def test_panel_uses_comfy_locale_and_hides_uncaptured_preview_steps():
     assert "function createBatchSelector(run)" in panel_script
     assert 'localeText("배치별 추적", "Batch trace")' in panel_script
     assert "selectedBatchStep(frame)" in panel_script
+    assert "function moveSelectedPreview(delta)" in panel_script
+    assert "function renderAndFocusCenter()" in panel_script
+    assert "renderAndFocusCenter();" in panel_script
+    assert 'event.key === "ArrowLeft" ? -1 : event.key === "ArrowRight" ? 1 : 0' in panel_script
+    assert "if (!center?.contains(event.target)) return;" in panel_script
+    assert "if (!state.root || isTextEntryTarget(event.target)) return;" in panel_script
+    assert "center.tabIndex = 0" in panel_script
+    assert 'container.querySelector(".cti-run-list")?.scrollTop || 0' in panel_script
+    assert "list.scrollTop = previousScrollTop" in panel_script
+
+
+def test_run_summary_keeps_destructive_action_readable_with_long_titles():
+    plugin_root = Path(__file__).resolve().parents[1]
+    panel_styles = (plugin_root / "web" / "trace_inspector.css").read_text(encoding="utf-8")
+
+    assert ".cti-section-header > .cti-heading-group:first-child { flex: 1 1 auto;" in panel_styles
+    assert ".cti-section-header > .cti-badge, .cti-section-header > .cti-button { flex: 0 0 auto; white-space: nowrap; }" in panel_styles
+    assert ".cti-section-header .cti-section-title, .cti-section-header .cti-section-kicker { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }" in panel_styles
 
 
 def test_trace_socket_names_follow_comfy_locale_without_changing_input_keys():
